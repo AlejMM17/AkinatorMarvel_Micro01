@@ -3,8 +3,8 @@ package marvelkinator;
 public class Preguntes {
     int id;
     String pregunta;
-    int nodeEsquerra;
-    int nodeDreta;
+    Integer nodeEsquerra;
+    Integer nodeDreta;
 
     public Preguntes(int id, String pregunta, int nodeEsquerra, int nodeDreta) {
         this.id = id;

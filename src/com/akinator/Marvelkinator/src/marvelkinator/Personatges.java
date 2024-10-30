@@ -1,10 +1,10 @@
 package marvelkinator;
 
-public class Persontages {
+public class Personatges {
     int id;
     String name;
     int node;
-    public Persontages(int id, String name, int node) {
+    public Personatges(int id, String name, int node) {
         this.id = id;
         this.name = name;
         this.node = node;

@@ -28,7 +28,7 @@ public class Marvelkinator {
                 System.out.println("La conexión falló.");
                 return;
             }
-            }
+        }
 
     }
     
