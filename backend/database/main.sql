@@ -1,18 +1,15 @@
 CREATE OR REPLACE DATABASE marvel_akinator;
 USE marvel;
 
-CREATE TABLE questions(
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    questions   VARCHAR(200) NOT NULL,
-    yes_node_id INT,
-    no_node_id  INT,
-    CONSTRAINT fk_yes_node FOREIGN KEY (yes_node_id) REFERENCES questions(id),
-    CONSTRAINT fk_no_node FOREIGN KEY (no_node_id) REFERENCES questions(id)
-);
-
-CREATE TABLE characters(
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    name        VARCHAR(200) NOT NULL,
-    node_id   INT,
-    CONSTRAINT fk_node FOREIGN KEY (node_id) REFERENCES questions(id)
+-- Tabla para almacenar las preguntas y personajes
+CREATE TABLE nodes (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+   pregunta TEXT,
+   personaje VARCHAR(255),
+   parent_id INT,
+   izquierdo_id INT,
+   derecho_id INT,
+   FOREIGN KEY (parent_id) REFERENCES nodes(id),
+   FOREIGN KEY (izquierdo_id) REFERENCES nodes(id),
+   FOREIGN KEY (derecho_id) REFERENCES nodes(id)
 );

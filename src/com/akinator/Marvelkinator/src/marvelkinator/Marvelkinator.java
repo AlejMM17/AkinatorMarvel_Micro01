@@ -23,10 +23,8 @@ public class Marvelkinator {
                 System.out.println("La conexión es exitosa: " + conexion);
                 JocMarvelkinator joc = new JocMarvelkinator();
                 joc.iniciarJoc();
-                joc.tancar();
             } else {
                 System.out.println("La conexión falló.");
-                return;
             }
         }
 
