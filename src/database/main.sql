@@ -11,18 +11,18 @@ CREATE TABLE nodes (
    derecho_id INT
 );
 INSERT INTO nodes (pregunta, personaje, parent_id, izquierdo_id, derecho_id) VALUES
-    ('¿Es un superhéroe?', NULL, NULL, 2, 3),
+    ('¿Es un superheroe?', NULL, NULL, 2, 3),
     ('¿Es parte de los Vengadores?', NULL, 1, 4, 5),
     ('¿Es un villano?', NULL, 1, 6, 7),
-    ('¿Usa un traje metálico?', NULL, 2, 8, 9),
+    ('¿Usa un traje metalico?', NULL, 2, 8, 9),
     ('¿Vive en Nueva York?', NULL, 2, 10, 11),
-    ('¿Es de origen alienígena?', NULL, 3, 12, 13),
+    ('¿Es de origen alienigena?', NULL, 3, 12, 13),
     ('¿Tiene poderes mentales?', NULL, 3, 14, 15),
-    ('¿Es el líder?', NULL, 4, 16, 17),
-    ('¿Puede lanzar telarañas?', NULL, 4, 18, 19),
+    ('¿Es el lider?', NULL, 4, 16, 17),
+    ('¿Puede lanzar telaranas?', NULL, 4, 18, 19),
     ('¿Es un hechicero?', NULL, 5, 20, 21),
     ('¿Es un agente de SHIELD?', NULL, 5, 22, 23),
-    ('¿Tiene un ejército?', NULL, 6, 24, 25),
+    ('¿Tiene un ejercito?', NULL, 6, 24, 25),
     ('¿Tiene la capacidad de cambiar de forma?', NULL, 6, 26, 27),
     ('¿Es extremadamente inteligente?', NULL, 7, 28, 29),
     ('¿Es conocido por su fuerza?', NULL, 7, 30, 31);
