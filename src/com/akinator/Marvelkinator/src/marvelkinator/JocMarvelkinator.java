@@ -2,22 +2,35 @@ package marvelkinator;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.Random;
 
 public class JocMarvelkinator {
     private Nodo raiz;
     private BaseDadesScripts baseDatos;
+    private boolean primeraVez;
 
     public JocMarvelkinator() throws SQLException {
+        this.primeraVez = true;  // Indica si es la primera vez que se ejecuta el juego
         this.raiz = obtenerRaizDelArbol();  // Obtiene la raíz desde la base de datos
     }
 
     public void iniciarJoc() {
         try {
             while (true) {
-                boolean respuestaCorrecta = adivinarPersonaje(raiz);
+                Nodo nodoInicial = primeraVez ? obtenerNodoAleatorio() : raiz;  // Obtener nodo aleatorio solo en la primera ejecución
+                boolean respuestaCorrecta = adivinarPersonaje(nodoInicial);
+
                 if (respuestaCorrecta) {
                     JOptionPane.showMessageDialog(null, "¡Adiviné el personaje!");
+                } else if (!primeraVez) {
+                    String nuevoNombre = JOptionPane.showInputDialog("¿Qué personaje era?");
+                    String nuevaPregunta = JOptionPane.showInputDialog("Escribe una pregunta para diferenciar " + nuevoNombre);
+                    int respuestaNueva = JOptionPane.showConfirmDialog(null, "¿La respuesta para " + nuevoNombre + " sería sí?", "Nueva pregunta", JOptionPane.YES_NO_OPTION);
+                    boolean esIzquierda = (respuestaNueva == JOptionPane.YES_OPTION);
+                    insertarPreguntaYPersonaje(nuevaPregunta, nuevoNombre, nodoInicial, esIzquierda, obtenerPadre(nodoInicial));
                 }
+
+                primeraVez = false;  // Después de la primera ejecución, siempre se empieza desde la raíz
 
                 int respuesta = JOptionPane.showConfirmDialog(null, "¿Quieres jugar otra vez?", "Nuevo juego", JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.NO_OPTION) {
@@ -34,23 +47,28 @@ public class JocMarvelkinator {
 
         if (nodoActual.esPersonaje()) {
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Es " + nodoActual.getPersonaje() + "?", "Adivina", JOptionPane.YES_NO_OPTION);
-            if (respuesta == JOptionPane.YES_OPTION) {
-                return true;
-            } else {
-                String nuevoNombre = JOptionPane.showInputDialog("¿Qué personaje era?");
-                String nuevaPregunta = JOptionPane.showInputDialog("Escribe una pregunta para diferenciar " + nuevoNombre);
-                int respuestaNueva = JOptionPane.showConfirmDialog(null, "¿La respuesta para " + nuevoNombre + " sería sí?", "Nueva pregunta", JOptionPane.YES_NO_OPTION);
-                boolean esIzquierda = (respuestaNueva == JOptionPane.YES_OPTION);
-                Nodo nodoPadre = obtenerPadre(nodoActual);
-
-                insertarPreguntaYPersonaje(nuevaPregunta, nuevoNombre, nodoActual, esIzquierda, nodoPadre);
-                return false;
-            }
+            return respuesta == JOptionPane.YES_OPTION;
         } else {
             int respuesta = JOptionPane.showConfirmDialog(null, nodoActual.getPregunta(), "Pregunta", JOptionPane.YES_NO_OPTION);
             Nodo siguienteNodo = respuesta == JOptionPane.YES_OPTION ? obtenerNodo(nodoActual.getId(), "izquierdo_id") : obtenerNodo(nodoActual.getId(), "derecho_id");
             return adivinarPersonaje(siguienteNodo);
         }
+    }
+
+    private Nodo obtenerNodoAleatorio() throws SQLException {
+        baseDatos = new BaseDadesScripts();
+        String query = "SELECT * FROM nodes WHERE pregunta IS NOT NULL ORDER BY RAND() LIMIT 1";
+        try (Statement stmt = baseDatos.getConexion().createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String pregunta = rs.getString("pregunta");
+                String personaje = rs.getString("personaje");
+                return new Nodo(id, personaje, pregunta);
+            }
+            cerrar();
+        }
+        return raiz;
     }
     private Nodo obtenerNodo(int parentId, String lado) throws SQLException {
         baseDatos = new BaseDadesScripts();
