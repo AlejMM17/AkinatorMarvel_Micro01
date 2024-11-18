@@ -29,18 +29,11 @@ public class Nodo {
     public void setId(int id) { this.id = id; }
 
     public String getPregunta() { return pregunta; }
-    public void setPregunta(String pregunta) { this.pregunta = pregunta; }
 
     public String getPersonaje() { return personaje; }
-    public void setPersonaje(String personaje) { this.personaje = personaje; }
 
-    public Nodo getIzquierdo() {
-
-        return izquierdo;
-    }
     public void setIzquierdo(Nodo izquierdo) { this.izquierdo = izquierdo; }
 
-    public Nodo getDerecho() { return derecho; }
     public void setDerecho(Nodo derecho) { this.derecho = derecho; }
 
     public boolean esPersonaje() {

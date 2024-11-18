@@ -137,6 +137,7 @@ public class JocMarvelkinator {
                             }
 
                             // Actualizar la base de datos con los nuevos IDs izquierdo/derecho del nodo pregunta
+                            actualizarNodoPadrePersonage(nuevoIdPregunta, nodoActual);
                             actualizarRelaciones(nuevaPreguntaNodo, nodoPadre, esIzquierda);
                             actualizarNuevaPregunta(nuevoIdPregunta, nodoActual, nuevoIdPersonaje, esIzquierda);
                         }
@@ -146,6 +147,20 @@ public class JocMarvelkinator {
         }
         cerrar();
     }
+    private void actualizarNodoPadrePersonage(int nuevoIdPregunta, Nodo nodoActual) throws SQLException {
+        baseDatos = new BaseDadesScripts();
+
+        String queryUpdate = "UPDATE nodes SET parent_id = ? WHERE id = ?";
+
+        try (Connection conexion = baseDatos.getConexion();
+             PreparedStatement stmt = conexion.prepareStatement(queryUpdate)) {
+            stmt.setInt(1, nuevoIdPregunta);
+            stmt.setInt(2, nodoActual.getId());
+            stmt.executeUpdate();
+        }
+        cerrar();
+    }
+
     private void actualizarNuevaPregunta(int nuevoIdPregunta, Nodo nodoActual, int nuevoIdPersonaje, boolean esIzquierda) throws SQLException {
         baseDatos = new BaseDadesScripts();
 
