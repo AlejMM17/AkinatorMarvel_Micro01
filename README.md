@@ -8,7 +8,7 @@ L'objectiu del projecte és endevinar el personatge de Marvel que un usuari té 
 ## Tecnologies utilitzades  
 - **Llenguatge de programació**: Java  
 - **Base de dades**: MySQL 8  
-- **IDE recomanat**: IntelliJ IDEA / Eclipse  
+- **IDE recomanat**: IntelliJ IDEA
 
 ## Característiques principals  
 - Sistema interactiu de preguntes i respostes.  
