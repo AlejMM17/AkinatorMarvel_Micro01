@@ -181,7 +181,7 @@ public class JocMarvelkinator {
 
     private void actualizarRelaciones(Nodo nuevaPreguntaNodo, Nodo nodoPadre, boolean esIzquierda) throws SQLException {
         baseDatos = new BaseDadesScripts();
-        String updateRelaciones = !esIzquierda
+        String updateRelaciones = esIzquierda
                 ? "UPDATE nodes SET izquierdo_id = ? WHERE id = ?"
                 : "UPDATE nodes SET derecho_id = ? WHERE id = ?";
 
